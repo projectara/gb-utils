@@ -92,7 +92,7 @@ print_bundle() {
 				;;
 		"0x0d" )	class_type="Camera"
 				;;
-		"0x0e" )	class_type="Sensoe"
+		"0x0e" )	class_type="Sensor"
 				;;
 		"0x0f" )	class_type="Lights"
 				;;
@@ -100,9 +100,7 @@ print_bundle() {
 				;;
 		"0x11" )	class_type="Loopback"
 				;;
-		"0x12" )	class_type="Audio Management"
-				;;
-		"0x13" )	class_type="Audio Data"
+		"0x12" )	class_type="Audio"
 				;;
 		"0x14" )	class_type="SVC"
 				;;
@@ -111,6 +109,8 @@ print_bundle() {
 		"0xfe" )	class_type="Raw"
 				;;
 		"0xff" )	class_type="Vendor"
+				;;
+		* )		class_type="UNKNOWN"
 				;;
 	esac
 	printf "    Bundle %02d Class %s (%s)\n" "${id}" "${class}" "${class_type}"
