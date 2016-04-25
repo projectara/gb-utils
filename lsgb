@@ -142,8 +142,9 @@ print_host_device() {
 
 print_unknown() {
 	local devname=$1
+	local devtype=$2
 
-	printf "Unknown device type: %s\n" "${devname}"
+	printf "Unknown device type '%s' with name '%s'\n" "${devtype}" "${devname}"
 }
 
 
@@ -168,7 +169,7 @@ print_device() {
 					;;
 		greybus_host_device )	print_host_device "${devname}"
 					;;
-		* )			print_unknown "${devname}"
+		* )			print_unknown "${devname}" "${devtype}"
 					;;
 	esac
 }
