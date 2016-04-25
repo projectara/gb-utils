@@ -56,7 +56,7 @@ print_interface() {
 	pid=$(cat product_id)
 	version=$(cat version)
 	serial=$(cat serial_number)
-	printf "  Intf %02d %s:%s v%s sn:%s\n"	\
+	printf "    Intf %02d %s:%s v%s sn:%s\n"	\
 		"${iid}" "${vid}" "${pid}" \
 		"${version}" "${serial}"
 }
@@ -68,7 +68,7 @@ print_control() {
 	vs=$(cat vendor_string) || true
 	ps=$(cat product_string) || true
 
-	printf "    Control (%s / %s)\n" "${vs}" "${ps}"
+	printf "      Control (%s / %s)\n" "${vs}" "${ps}"
 }
 
 print_bundle() {
@@ -129,7 +129,7 @@ print_bundle() {
 		* )		class_type="UNKNOWN"
 				;;
 	esac
-	printf "    Bundle %02d Class %s (%s)\n" "${id}" "${class}" "${class_type}"
+	printf "      Bundle %02d Class %s (%s)\n" "${id}" "${class}" "${class_type}"
 }
 
 print_svc() {
