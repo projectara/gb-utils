@@ -35,6 +35,14 @@
 # change a lot over time.
 #
 
+print_module() {
+	local devname=$1
+	local mid
+
+	mid=$(cat module_id)
+	printf "  Module %02d\n" "${mid}"
+}
+
 print_interface() {
 	local devname=$1
 	local iid
@@ -159,6 +167,8 @@ print_device() {
 	devname=$(basename "${dev}")
 	devtype=$(grep DEVTYPE uevent | cut -f 2 -d '=')
 	case ${devtype} in
+		greybus_module )	print_module "${devname}"
+					;;
 		greybus_interface )	print_interface "${devname}"
 					;;
 		greybus_control )	print_control "${devname}"
