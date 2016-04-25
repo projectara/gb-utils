@@ -112,6 +112,8 @@ print_bundle() {
 				;;
 		"0x15" )	class_type="Bootrom"
 				;;
+		"0x16" )	class_type="Firmware Management"
+				;;
 		"0xfe" )	class_type="Raw"
 				;;
 		"0xff" )	class_type="Vendor"
