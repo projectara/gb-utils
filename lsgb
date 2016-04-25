@@ -42,19 +42,25 @@ print_interface() {
 	local pid
 	local version
 	local serial
-	local vs
-	local ps
 
 	iid=$(cat interface_id)
 	vid=$(cat vendor_id)
 	pid=$(cat product_id)
 	version=$(cat version)
 	serial=$(cat serial_number)
+	printf "  Intf %02d %s:%s v%s sn:%s\n"	\
+		"${iid}" "${vid}" "${pid}" \
+		"${version}" "${serial}"
+}
+
+print_control() {
+	local vs
+	local ps
+
 	vs=$(cat vendor_string) || true
 	ps=$(cat product_string) || true
-	printf "  Intf %02d %s:%s %s %s v%s sn:%s\n"	\
-		"${iid}" "${vid}" "${pid}" "${vs}"	\
-		"${ps}" "${version}" "${serial}"
+
+	printf "    Control (%s / %s)\n" "${vs}" "${ps}"
 }
 
 print_bundle() {
@@ -151,6 +157,8 @@ print_device() {
 	devtype=$(grep DEVTYPE uevent | cut -f 2 -d '=')
 	case ${devtype} in
 		greybus_interface )	print_interface "${devname}"
+					;;
+		greybus_control )	print_control "${devname}"
 					;;
 		greybus_bundle )	print_bundle "${devname}"
 					;;
