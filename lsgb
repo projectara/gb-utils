@@ -143,7 +143,7 @@ print_host_device() {
 print_unknown() {
 	local devname=$1
 
-	printf "Unknown device type: %s\n", "${devname}"
+	printf "Unknown device type: %s\n" "${devname}"
 }
 
 
