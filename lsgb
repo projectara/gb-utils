@@ -41,6 +41,13 @@ print_module() {
 
 	mid=$(cat module_id)
 	printf "  Module %02d\n" "${mid}"
+
+	local modulename=$(basename $devname)
+	# Process Interfaces
+	for dir in $devname/$modulename\.*
+	do
+		print_device $dir
+	done
 }
 
 print_interface() {
@@ -59,6 +66,13 @@ print_interface() {
 	printf "    Intf %02d %s:%s v%s sn:%s\n"	\
 		"${iid}" "${vid}" "${pid}" \
 		"${version}" "${serial}"
+
+	local intfname=$(basename $devname)
+	# Process Bundles
+	for dir in $devname/$intfname\.*
+	do
+		print_device $dir
+	done
 }
 
 print_control() {
@@ -142,10 +156,17 @@ print_svc() {
 
 print_host_device() {
 	local devname=$1
+	local busnum=$(echo $(basename $devname) | sed 's/greybus//g');
 	local bus
 
 	bus=$(grep BUS uevent | cut -f 2 -d '=')
 	printf "Bus %02d\n" "${bus}"
+
+	# Process SVC and Modules
+	for dir in $devname/$busnum-*
+	do
+		print_device $dir
+	done
 }
 
 print_unknown() {
@@ -155,16 +176,13 @@ print_unknown() {
 	printf "Unknown device type '%s' with name '%s'\n" "${devtype}" "${devname}"
 }
 
-
 print_device() {
-	local dev=$1
-	local devname
+	local devname=$1
 	local devtype
 
-	[ -d "${dev}" ] || return
-	cd "${dev}" || return
+	[ -d "${devname}" ] || return
+	cd "${devname}" || return
 
-	devname=$(basename "${dev}")
 	devtype=$(grep DEVTYPE uevent | cut -f 2 -d '=')
 	case ${devtype} in
 		greybus_module )	print_module "${devname}"
@@ -184,7 +202,7 @@ print_device() {
 	esac
 }
 
-for device in /sys/bus/greybus/devices/*
+for device in /sys/bus/greybus/devices/greybus*
 do
 	print_device "${device}"
 done
