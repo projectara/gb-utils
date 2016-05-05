@@ -55,17 +55,15 @@ print_interface() {
 	local iid
 	local vid
 	local pid
-	local version
 	local serial
 
 	iid=$(cat interface_id)
 	vid=$(cat vendor_id)
 	pid=$(cat product_id)
-	version=$(cat version)
 	serial=$(cat serial_number)
-	printf "    Intf %02d %s:%s v%s sn:%s\n"	\
+	printf "    Intf %02d %s:%s sn:%s\n"	\
 		"${iid}" "${vid}" "${pid}" \
-		"${version}" "${serial}"
+		"${serial}"
 
 	local intfname=$(basename $devname)
 	# Process Bundles
